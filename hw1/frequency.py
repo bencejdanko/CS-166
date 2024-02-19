@@ -2,7 +2,7 @@ def get_frequency(text):
   frequency = {}
   text = "".join(text.split())
   for c in text:
-    if c is not in frequency:
+    if c not in frequency:
       frequency[c] = 1
     else:
       frequency[c] = frequency[c] + 1
