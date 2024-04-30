@@ -12,7 +12,7 @@ The file stackX.c contains a shellcode and reads a file "badshellcodefile", whic
 
 Compile the programs using the following commands:
 
-	sudo sysctl -w kernel.randomize_va_space=0
+	sudo sysclt -w kernel.randomize_va_space=0
 	gcc -g -o exploitX -z execstack -fno-stack-protector exploitX.c
 	gcc -g -o stackX -z execustack -fno-stack-protector stackX.c
 
