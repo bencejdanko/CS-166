@@ -16,10 +16,10 @@
 int bof(char *str)
 {
     char buffer[BUF_SIZE];
-    printf("%p\n", &buffer);
+
     /* The following statement has a buffer overflow problem */
     strcpy(buffer, str);       
-    
+
     return 1;
 }
 
