@@ -1,0 +1,22 @@
+<title>Token Storage Demo</title>
+<body>
+    <input type="text" id="token" placeholder="Enter token here">
+    <button onclick="storeToken()">Store Token</button>
+    <button onclick="getToken()">Get Token</button>
+    <button onclick="w.terminate()">Terminate Worker</button>
+    <script>
+        let token = 'dummy'
+        let w
+
+        function storeToken() {
+            w = new Worker('worker.js');
+            let token = document.getElementById('token').value;
+            w.postMessage(token);
+        }
+
+        function getToken() {
+            w.postMessage('get');
+        }
+    </script>
+</body>
+</html>
