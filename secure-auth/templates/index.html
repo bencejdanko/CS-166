@@ -1,0 +1,92 @@
+<style>
+    .center {
+        display: grid;
+        grid-column: 1fr;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .auth {
+        padding: 20px;
+    }
+
+    button {
+        padding: 10px;
+        margin: 10px;
+    }
+</style>
+
+<div class="center">
+
+    <div class="auth">
+        <a style="padding: 10px" href="login">Login</a>
+        <a href="register">Register</a>
+    </div>
+
+    <input id='secret' type="text" placeholder="secret" name="secret">
+    <button id="set"> set secret </button>
+    <button id="get"> get secret </button>
+
+    <button id="cookie"> get refresh token </button>
+
+    <input id="refresh_token" type="text" placeholder="refresh_token" name="refresh_token">
+
+    <span id="message"></span>
+
+    {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+    {% endfor %}
+
+</div>
+
+<script>
+
+    let w = new Worker('{{ url_for("static", filename="worker.js") }}');
+    let secret_access_token_url = '{{ url_for("secret_access_token") }}';
+    let secret_url = '{{ url_for("secret") }}';
+    let cookie_url = '{{ url_for("cookie") }}';
+
+    w.onmessage = function (event) {
+
+        let { method, secret } = event.data;
+
+        if (method === 'get') {
+            document.querySelector("#secret").value = secret;
+        } else if (method === 'set') {
+            document.querySelector("#secret").value = "SECRET SET";
+        } else if (method === 'error') {
+            document.querySelector("#message").innerText = event.data.message;
+        }
+    }
+
+    document.querySelector("#get").addEventListener('click', async () => {
+        w.postMessage({
+            method: 'get',
+            secret_access_token_url: secret_access_token_url,
+            secret_url, secret_url
+        });
+    });
+
+    document.querySelector("#set").addEventListener('click', async () => {
+        w.postMessage({
+            method: 'set',
+            secret_access_token_url: secret_access_token_url,
+            secret_url: secret_url,
+            secret: document.querySelector("#secret").value
+        });
+    });
+
+    document.querySelector('#cookie').addEventListener('click', async () => {
+        let response = await fetch(cookie_url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        let data = await response.json();
+        document.querySelector("#refresh_token").value = data.refresh_token;
+    });
+
+
+</script>
