@@ -15,9 +15,7 @@ pkt_count = int(sys.argv[3])
 
 for i in range(0, pkt_count):
 	src_ip = randomIP()
-	src_port = randPort()
-
+	
 	packet = IP(src=str(src_ip), dst=dest_ip_address)
-	segment = TCP(sport=src_port, dport=dest_port, flags="S")
-	pkt = packet/segment
+	pkt = packet/ICMP()
 	send(pkt)

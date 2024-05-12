@@ -18,6 +18,6 @@ for i in range(0, pkt_count):
 	src_port = randPort()
 
 	packet = IP(src=str(src_ip), dst=dest_ip_address)
-	segment = TCP(sport=src_port, dport=dest_port, flags="S")
+	segment = UDP(sport=src_port, dport=dest_port)
 	pkt = packet/segment
 	send(pkt)
